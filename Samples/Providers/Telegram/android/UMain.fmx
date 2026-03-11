@@ -1,0 +1,155 @@
+object FormTelegramAndroid: TFormTelegramAndroid
+  Left = 0
+  Top = 0
+  Caption = 'Telegram Provider'
+  ClientHeight = 720
+  ClientWidth = 480
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  DesignerMasterStyle = 0
+  object Layout1: TLayout
+    Align = Top
+    Size.Width = 480.000000000000000000
+    Size.Height = 520.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    object lblToken: TLabel
+      Position.X = 8.000000000000000000
+      Position.Y = 8.000000000000000000
+      Text = 'Bot Token:'
+    end
+    object edtToken: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      Position.X = 8.000000000000000000
+      Position.Y = 28.000000000000000000
+      Size.Width = 464.000000000000000000
+      Size.Height = 32.000000000000000000
+      Size.PlatformDefault = False
+      TextPrompt = 'Cole seu bot token aqui'
+    end
+    object lblChatID: TLabel
+      Position.X = 8.000000000000000000
+      Position.Y = 68.000000000000000000
+      Text = 'Chat ID:'
+    end
+    object edtChatID: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      Position.X = 8.000000000000000000
+      Position.Y = 88.000000000000000000
+      Size.Width = 464.000000000000000000
+      Size.Height = 32.000000000000000000
+      Size.PlatformDefault = False
+      TextPrompt = 'Cole seu chat ID aqui'
+    end
+    object lblParseMode: TLabel
+      Position.X = 8.000000000000000000
+      Position.Y = 128.000000000000000000
+      Text = 'Parse Mode:'
+    end
+    object cmbParseMode: TComboBox
+      Position.X = 8.000000000000000000
+      Position.Y = 148.000000000000000000
+      Size.Width = 200.000000000000000000
+      Size.Height = 32.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object chkInformation: TCheckBox
+      Position.X = 8.000000000000000000
+      Position.Y = 192.000000000000000000
+      Size.Width = 110.000000000000000000
+      Size.Height = 19.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Information'
+    end
+    object chkWarning: TCheckBox
+      Position.X = 120.000000000000000000
+      Position.Y = 192.000000000000000000
+      Size.Width = 80.000000000000000000
+      Size.Height = 19.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Warning'
+    end
+    object chkError: TCheckBox
+      Position.X = 204.000000000000000000
+      Position.Y = 192.000000000000000000
+      Size.Width = 60.000000000000000000
+      Size.Height = 19.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Error'
+    end
+    object chkFatalError: TCheckBox
+      Position.X = 268.000000000000000000
+      Position.Y = 192.000000000000000000
+      Size.Width = 90.000000000000000000
+      Size.Height = 19.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'FatalError'
+    end
+    object btnApply: TButton
+      Position.X = 8.000000000000000000
+      Position.Y = 232.000000000000000000
+      Size.Width = 464.000000000000000000
+      Size.Height = 44.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Aplicar Provider'
+      TextSettings.Trimming = None
+      OnClick = btnApplyClick
+    end
+    object Layout2: TLayout
+      Position.X = 8.000000000000000000
+      Position.Y = 286.000000000000000000
+      Size.Width = 464.000000000000000000
+      Size.Height = 50.000000000000000000
+      Size.PlatformDefault = False
+      object btnInformation: TButton
+        Size.Width = 110.000000000000000000
+        Size.Height = 44.000000000000000000
+        Size.PlatformDefault = False
+        Text = 'Info'
+        TextSettings.Trimming = None
+        OnClick = btnInformationClick
+      end
+      object btnWarning: TButton
+        Position.X = 118.000000000000000000
+        Size.Width = 110.000000000000000000
+        Size.Height = 44.000000000000000000
+        Size.PlatformDefault = False
+        Text = 'Warning'
+        TextSettings.Trimming = None
+        OnClick = btnWarningClick
+      end
+      object btnError: TButton
+        Position.X = 236.000000000000000000
+        Size.Width = 110.000000000000000000
+        Size.Height = 44.000000000000000000
+        Size.PlatformDefault = False
+        Text = 'Error'
+        TextSettings.Trimming = None
+        OnClick = btnErrorClick
+      end
+      object btnFatalError: TButton
+        Position.X = 354.000000000000000000
+        Size.Width = 110.000000000000000000
+        Size.Height = 44.000000000000000000
+        Size.PlatformDefault = False
+        Text = 'Fatal'
+        TextSettings.Trimming = None
+        OnClick = btnFatalErrorClick
+      end
+    end
+  end
+  object memoFeedback: TMemo
+    Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+    DataDetectorTypes = []
+    ReadOnly = True
+    Align = Client
+    Size.Width = 480.000000000000000000
+    Size.Height = 200.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    Viewport.Width = 476.000000000000000000
+    Viewport.Height = 196.000000000000000000
+  end
+end

@@ -29,7 +29,9 @@ type
     {$ENDIF}
     class procedure SetUserName(const AUserName: string); static;
     {$ENDIF}
+    {$IF NOT DEFINED(ANDROID) AND NOT DEFINED(IOS)}
     class procedure SetEnableLog(const AEnableLog: Boolean = True); static;
+    {$ENDIF}
   end;
 
 implementation
@@ -37,7 +39,9 @@ implementation
 class constructor TMultiLog4DUtil.Create;
 begin
   FLogger := TLogFactory.GetLogger;
+  {$IF NOT DEFINED(ANDROID) AND NOT DEFINED(IOS)}
   SetEnableLog();
+  {$ENDIF}
 end;
 
 class function TMultiLog4DUtil.Logger: IMultiLog4D;
@@ -86,14 +90,15 @@ begin
 end;
 {$ENDIF}
 
+{$IF NOT DEFINED(ANDROID) AND NOT DEFINED(IOS)}
 class procedure TMultiLog4DUtil.SetEnableLog(const AEnableLog: Boolean = True);
 begin
   if Assigned(FLogger) then
     FLogger.EnableLog(AEnableLog);
 end;
+{$ENDIF}
 
 initialization
-TMultiLog4DUtil.Create;
 
 finalization
 TMultiLog4DUtil.FLogger := nil;
