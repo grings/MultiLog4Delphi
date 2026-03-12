@@ -1,10 +1,10 @@
-program Android_Telegram;
+program Android2Telegram;
 
 uses
   MultiLog4D.Util,
   System.StartUpCopy,
   FMX.Forms,
-  UMain in 'UMain.pas' {FormTelegramAndroid};
+  Unit4 in 'Unit4.pas' {Form4};
 
 {$R *.res}
 
@@ -16,6 +16,6 @@ begin
     .LogWriteInformation('>>>>>>>>>> Starting Telegram Android Sample <<<<<<<<<<');
 
   Application.Initialize;
-  Application.CreateForm(TFormTelegramAndroid, FormTelegramAndroid);
+  Application.CreateForm(TForm4, Form4);
   Application.Run;
 end.

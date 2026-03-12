@@ -1,4 +1,4 @@
-unit UMain;
+unit Unit4;
 
 interface
 
@@ -24,7 +24,7 @@ uses
   FMX.ScrollBox, FMX.Memo.Types;
 
 type
-  TFormTelegramAndroid = class(TForm)
+  TForm4 = class(TForm)
     Layout1: TLayout;
     lblToken: TLabel;
     edtToken: TEdit;
@@ -43,6 +43,9 @@ type
     btnError: TButton;
     btnFatalError: TButton;
     memoFeedback: TMemo;
+    Layout3: TLayout;
+    Layout4: TLayout;
+    Layout5: TLayout;
     procedure FormCreate(Sender: TObject);
     procedure btnApplyClick(Sender: TObject);
     procedure btnInformationClick(Sender: TObject);
@@ -57,13 +60,13 @@ type
   end;
 
 var
-  FormTelegramAndroid: TFormTelegramAndroid;
+  Form4: TForm4;
 
 implementation
 
 {$R *.fmx}
 
-procedure TFormTelegramAndroid.FormCreate(Sender: TObject);
+procedure TForm4.FormCreate(Sender: TObject);
 begin
   FProvider := nil;
   cmbParseMode.Items.Add('PlainText');
@@ -75,7 +78,7 @@ begin
   chkFatalError.IsChecked := True;
 end;
 
-function TFormTelegramAndroid.BuildLogTypeFilter: TLogTypeFilter;
+function TForm4.BuildLogTypeFilter: TLogTypeFilter;
 begin
   Result := [];
   if chkInformation.IsChecked then Include(Result, ltInformation);
@@ -84,7 +87,7 @@ begin
   if chkFatalError.IsChecked  then Include(Result, ltFatalError);
 end;
 
-procedure TFormTelegramAndroid.ApplyProvider;
+procedure TForm4.ApplyProvider;
 const
   ParseModes: array[0..2] of TMultiLog4DTelegramParseMode = (
     tpmPlainText, tpmMarkdown, tpmHTML);
@@ -99,7 +102,7 @@ begin
   memoFeedback.Lines.Add('Provider aplicado com sucesso.');
 end;
 
-procedure TFormTelegramAndroid.btnApplyClick(Sender: TObject);
+procedure TForm4.btnApplyClick(Sender: TObject);
 begin
   try
     ApplyProvider;
@@ -109,25 +112,25 @@ begin
   end;
 end;
 
-procedure TFormTelegramAndroid.btnInformationClick(Sender: TObject);
+procedure TForm4.btnInformationClick(Sender: TObject);
 begin
   TMultiLog4DUtil.Logger.LogWriteInformation('Mensagem de informacao');
   memoFeedback.Lines.Add('[INF] Enviado.');
 end;
 
-procedure TFormTelegramAndroid.btnWarningClick(Sender: TObject);
+procedure TForm4.btnWarningClick(Sender: TObject);
 begin
   TMultiLog4DUtil.Logger.LogWriteWarning('Uso de memoria acima de 80%');
   memoFeedback.Lines.Add('[WAR] Enviado.');
 end;
 
-procedure TFormTelegramAndroid.btnErrorClick(Sender: TObject);
+procedure TForm4.btnErrorClick(Sender: TObject);
 begin
   TMultiLog4DUtil.Logger.LogWriteError('Falha ao conectar ao banco');
   memoFeedback.Lines.Add('[ERR] Enviado.');
 end;
 
-procedure TFormTelegramAndroid.btnFatalErrorClick(Sender: TObject);
+procedure TForm4.btnFatalErrorClick(Sender: TObject);
 begin
   TMultiLog4DUtil.Logger.LogWriteFatalError('Processo encerrado inesperadamente');
   memoFeedback.Lines.Add('[FAT] Enviado.');
