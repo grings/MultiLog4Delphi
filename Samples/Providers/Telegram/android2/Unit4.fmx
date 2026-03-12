@@ -1,0 +1,239 @@
+object Form4: TForm4
+  Left = 0
+  Top = 0
+  Caption = 'Telegram Provider'
+  ClientHeight = 720
+  ClientWidth = 400
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  DesignerMasterStyle = 3
+  object Layout1: TLayout
+    Align = Top
+    Size.Width = 400.000000000000000000
+    Size.Height = 441.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    object btnApply: TButton
+      Align = Top
+      Margins.Left = 10.000000000000000000
+      Margins.Top = 10.000000000000000000
+      Margins.Right = 10.000000000000000000
+      Margins.Bottom = 10.000000000000000000
+      Position.X = 10.000000000000000000
+      Position.Y = 312.000000000000000000
+      Size.Width = 380.000000000000000000
+      Size.Height = 44.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Aplicar Provider'
+      TextSettings.Trimming = None
+      OnClick = btnApplyClick
+    end
+    object Layout2: TLayout
+      Align = Top
+      Margins.Left = 8.000000000000000000
+      Margins.Top = 8.000000000000000000
+      Margins.Right = 8.000000000000000000
+      Margins.Bottom = 8.000000000000000000
+      Position.X = 8.000000000000000000
+      Position.Y = 374.000000000000000000
+      Size.Width = 384.000000000000000000
+      Size.Height = 50.000000000000000000
+      Size.PlatformDefault = False
+      object btnInformation: TButton
+        Align = Left
+        Margins.Left = 4.000000000000000000
+        Margins.Top = 4.000000000000000000
+        Margins.Right = 4.000000000000000000
+        Margins.Bottom = 4.000000000000000000
+        Position.X = 4.000000000000000000
+        Position.Y = 4.000000000000000000
+        Size.Width = 77.000000000000000000
+        Size.Height = 42.000000000000000000
+        Size.PlatformDefault = False
+        Text = 'Info'
+        TextSettings.Trimming = None
+        OnClick = btnInformationClick
+      end
+      object btnWarning: TButton
+        Align = Left
+        Margins.Left = 4.000000000000000000
+        Margins.Top = 4.000000000000000000
+        Margins.Right = 4.000000000000000000
+        Margins.Bottom = 4.000000000000000000
+        Position.X = 89.000000000000000000
+        Position.Y = 4.000000000000000000
+        Size.Width = 77.000000000000000000
+        Size.Height = 42.000000000000000000
+        Size.PlatformDefault = False
+        Text = 'Warning'
+        TextSettings.Trimming = None
+        OnClick = btnWarningClick
+      end
+      object btnError: TButton
+        Align = Left
+        Margins.Left = 4.000000000000000000
+        Margins.Top = 4.000000000000000000
+        Margins.Right = 4.000000000000000000
+        Margins.Bottom = 4.000000000000000000
+        Position.X = 174.000000000000000000
+        Position.Y = 4.000000000000000000
+        Size.Width = 77.000000000000000000
+        Size.Height = 42.000000000000000000
+        Size.PlatformDefault = False
+        Text = 'Error'
+        TextSettings.Trimming = None
+        OnClick = btnErrorClick
+      end
+      object btnFatalError: TButton
+        Align = Left
+        Margins.Left = 4.000000000000000000
+        Margins.Top = 4.000000000000000000
+        Margins.Right = 4.000000000000000000
+        Margins.Bottom = 4.000000000000000000
+        Position.X = 259.000000000000000000
+        Position.Y = 4.000000000000000000
+        Size.Width = 77.000000000000000000
+        Size.Height = 42.000000000000000000
+        Size.PlatformDefault = False
+        Text = 'Fatal'
+        TextSettings.Trimming = None
+        OnClick = btnFatalErrorClick
+      end
+    end
+    object Layout3: TLayout
+      Align = Top
+      Padding.Left = 10.000000000000000000
+      Padding.Top = 10.000000000000000000
+      Padding.Right = 10.000000000000000000
+      Padding.Bottom = 10.000000000000000000
+      Size.Width = 400.000000000000000000
+      Size.Height = 91.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      object lblToken: TLabel
+        Position.X = 14.000000000000000000
+        Position.Y = 14.000000000000000000
+        Size.Width = 203.000000000000000000
+        Size.Height = 23.000000000000000000
+        Size.PlatformDefault = False
+        Text = 'Bot Token:'
+        TabOrder = 0
+      end
+      object edtToken: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        Align = Bottom
+        TabOrder = 1
+        Position.X = 10.000000000000000000
+        Position.Y = 49.000000000000000000
+        Size.Width = 380.000000000000000000
+        Size.Height = 32.000000000000000000
+        Size.PlatformDefault = False
+        TextPrompt = 'Cole seu bot token aqui'
+      end
+    end
+    object Layout4: TLayout
+      Align = Top
+      Padding.Left = 10.000000000000000000
+      Padding.Top = 10.000000000000000000
+      Padding.Right = 10.000000000000000000
+      Padding.Bottom = 10.000000000000000000
+      Position.Y = 91.000000000000000000
+      Size.Width = 400.000000000000000000
+      Size.Height = 83.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+      object edtChatID: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        Align = Bottom
+        TabOrder = 0
+        Position.X = 10.000000000000000000
+        Position.Y = 41.000000000000000000
+        Size.Width = 380.000000000000000000
+        Size.Height = 32.000000000000000000
+        Size.PlatformDefault = False
+        TextPrompt = 'Cole seu chat ID aqui'
+      end
+      object lblChatID: TLabel
+        Position.X = 14.000000000000000000
+        Position.Y = 8.000000000000000000
+        Text = 'Chat ID:'
+        TabOrder = 1
+      end
+    end
+    object Layout5: TLayout
+      Align = Top
+      Position.Y = 174.000000000000000000
+      Size.Width = 400.000000000000000000
+      Size.Height = 128.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 2
+      object cmbParseMode: TComboBox
+        Position.X = 8.000000000000000000
+        Position.Y = 33.000000000000000000
+        Size.Width = 200.000000000000000000
+        Size.Height = 32.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+      end
+      object lblParseMode: TLabel
+        Position.X = 8.000000000000000000
+        Position.Y = 8.000000000000000000
+        Size.Width = 188.000000000000000000
+        Size.Height = 23.000000000000000000
+        Size.PlatformDefault = False
+        Text = 'Parse Mode:'
+        TabOrder = 1
+      end
+      object chkError: TCheckBox
+        Position.X = 144.000000000000000000
+        Position.Y = 73.000000000000000000
+        Size.Width = 60.000000000000000000
+        Size.Height = 19.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 2
+        Text = 'Error'
+      end
+      object chkFatalError: TCheckBox
+        Position.X = 144.000000000000000000
+        Position.Y = 100.000000000000000000
+        Size.Width = 90.000000000000000000
+        Size.Height = 19.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 3
+        Text = 'FatalError'
+      end
+      object chkInformation: TCheckBox
+        Position.X = 8.000000000000000000
+        Position.Y = 73.000000000000000000
+        Size.Width = 110.000000000000000000
+        Size.Height = 19.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 4
+        Text = 'Information'
+      end
+      object chkWarning: TCheckBox
+        Position.X = 8.000000000000000000
+        Position.Y = 100.000000000000000000
+        Size.Width = 128.000000000000000000
+        Size.Height = 19.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 5
+        Text = 'Warning'
+      end
+    end
+  end
+  object memoFeedback: TMemo
+    Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+    DataDetectorTypes = []
+    ReadOnly = True
+    Align = Client
+    Size.Width = 400.000000000000000000
+    Size.Height = 279.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    Viewport.Width = 392.000000000000000000
+    Viewport.Height = 271.000000000000000000
+  end
+end

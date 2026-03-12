@@ -9,6 +9,7 @@ uses
 
 type
   TLogType = (ltInformation, ltWarning, ltError, ltFatalError);
+  TLogTypeFilter = set of TLogType;
   TEventCategory = (ecNone, ecApplication, ecSecurity, ecPerformance, ecError,
     ecWarning, ecDebug, ecTransaction, ecNetwork);
 

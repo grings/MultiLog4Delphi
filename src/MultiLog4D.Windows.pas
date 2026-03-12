@@ -113,6 +113,8 @@ begin
     end;
     WriteToEventViewer(AMsg, LType);
   end;
+
+  NotifyProviders(AMsg, ALogType);
 end;
 
 (*

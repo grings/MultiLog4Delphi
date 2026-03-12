@@ -10,7 +10,6 @@ uses
     Macapi.ObjectiveC,
     Macapi.Foundation,
   {$ENDIF}
-  FMX.Dialogs,
   MultiLog4D.Base,
   MultiLog4D.Common,
   MultiLog4D.Interfaces,
@@ -53,6 +52,7 @@ end;
 procedure TMultiLog4DMacOS.LogWriteToDestination(const AMsg: string; const ALogType: TLogType);
 begin
   WriteToNSLog(AMsg, ALogType);
+  NotifyProviders(AMsg, ALogType);
 end;
 
 function TMultiLog4DMacOS.LogWrite(const AMsg: string; const ALogType: TLogType): IMultiLog4D;

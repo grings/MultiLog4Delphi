@@ -12,7 +12,8 @@ uses
     Macapi.CoreFoundation,
   {$ENDIF}
   System.Classes,
-  MultiLog4D.Types;
+  MultiLog4D.Types,
+  MultiLog4D.Provider.Interfaces;
 
 type
   IMultiLog4D = interface
@@ -35,7 +36,12 @@ type
       {$ENDIF}
       function UserName(const AUserName: string): IMultiLog4D;
     {$ENDIF}
+    {$IF NOT DEFINED(ANDROID) AND NOT DEFINED(IOS)}
     function EnableLog(const AEnable: Boolean = True): IMultiLog4D;
+    {$ENDIF}
+    function AddProvider(const AProvider: IMultiLog4DProvider): IMultiLog4D;
+    function RemoveProvider(const AProvider: IMultiLog4DProvider): IMultiLog4D;
+    function ClearProviders: IMultiLog4D;
     function LogWrite(const AMsg: string; const ALogType: TLogType): IMultiLog4D;
     function LogWriteInformation(const AMsg: string): IMultiLog4D;
     function LogWriteWarning(const AMsg: string): IMultiLog4D;

@@ -54,6 +54,7 @@ end;
 procedure TMultiLog4DLinux.LogWriteToDestination(const AMsg: string; const ALogType: TLogType);
 begin
   WriteToSysLog(AMsg, ALogType);
+  NotifyProviders(AMsg, ALogType);
 end;
 
 function TMultiLog4DLinux.LogWrite(const AMsg: string; const ALogType: TLogType): IMultiLog4D;
