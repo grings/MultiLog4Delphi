@@ -18,7 +18,8 @@ uses
 
 type
   TMultiLog4DiOS = class(TMultiLog4DBase)
-  private
+  protected
+    procedure LogWriteToDestination(const AMsg: string; const ALogType: TLogType);
   public
     function LogWrite(const AMsg: string; const ALogType: TLogType): IMultiLog4D; override;
     function LogWriteInformation(const AMsg: string): IMultiLog4D; override;
@@ -29,66 +30,42 @@ type
 
 implementation
 
+procedure TMultiLog4DiOS.LogWriteToDestination(const AMsg: string; const ALogType: TLogType);
+begin
+  {$IFDEF IOS}
+  NSLog(StringToID(FTag + GetLogPrefix(ALogType) + AMsg));
+  {$ENDIF}
+  NotifyProviders(AMsg, ALogType);
+end;
+
 function TMultiLog4DiOS.LogWrite(const AMsg: string; const ALogType: TLogType): IMultiLog4D;
 begin
-  if not FEnableLog then
-    Exit(Self);
-
-  case ALogType of
-    ltWarning:     LogWriteWarning(AMsg);
-    ltError:       LogWriteError(AMsg);
-    ltFatalError:  LogWriteFatalError(AMsg);
-    else           LogWriteInformation(AMsg);
-  end;
+  LogWriteToDestination(AMsg, ALogType);
   Result := Self as IMultiLog4D;
 end;
 
 function TMultiLog4DiOS.LogWriteInformation(const AMsg: string): IMultiLog4D;
 begin
-  if not FEnableLog then
-    Exit(Self);
-
-  {$IFDEF IOS}
-    NSLog(StringToID(FTag + GetLogPrefix(ltInformation) + AMsg));
-  {$ENDIF}
+  LogWriteToDestination(AMsg, ltInformation);
   Result := Self as IMultiLog4D;
 end;
 
 function TMultiLog4DiOS.LogWriteWarning(const AMsg: string): IMultiLog4D;
 begin
-  if not FEnableLog then
-    Exit(Self);
-
-  {$IFDEF IOS}
-    NSLog(StringToID(FTag + GetLogPrefix(ltWarning) + AMsg));
-  {$ENDIF}
-
+  LogWriteToDestination(AMsg, ltWarning);
   Result := Self as IMultiLog4D;
 end;
 
 function TMultiLog4DiOS.LogWriteError(const AMsg: string): IMultiLog4D;
 begin
-  if not FEnableLog then
-    Exit(Self);
-
-  {$IFDEF IOS}
-    NSLog(StringToID(FTag + GetLogPrefix(ltError) + AMsg));
-  {$ENDIF}
-
+  LogWriteToDestination(AMsg, ltError);
   Result := Self as IMultiLog4D;
 end;
 
 function TMultiLog4DiOS.LogWriteFatalError(const AMsg: string): IMultiLog4D;
 begin
-  if not FEnableLog then
-    Exit(Self);
-
-  {$IFDEF IOS}
-    NSLog(StringToID(FTag + GetLogPrefix(ltFatalError) + AMsg));
-  {$ENDIF}
-
+  LogWriteToDestination(AMsg, ltFatalError);
   Result := Self as IMultiLog4D;
 end;
-
 
 end.

@@ -257,6 +257,74 @@ end;
 
 ---
 
+### 🤖 Providers — External Notifications
+
+MultiLog4D supports **Providers**, external output channels that receive log entries
+in addition to the native platform output (Logcat, EventViewer, syslog, etc.).
+
+Add any provider to the logger with `AddProvider`. Remember to add `src/Providers/` to your project's **Search Path**.
+
+#### 📨 Telegram Provider
+
+Sends log messages directly to a Telegram chat or group via Bot API.
+
+**Setup:**
+1. Talk to [@BotFather](https://t.me/BotFather) on Telegram → `/newbot` → copy the token
+2. Get your Chat ID via [@userinfobot](https://t.me/userinfobot) or the `getUpdates` API endpoint
+
+**Minimal usage:**
+```pascal
+uses
+  MultiLog4D.Util,
+  MultiLog4D.Types,
+  MultiLog4D.Provider.Telegram;
+
+var
+  LProvider: TMultiLog4DProviderTelegram;
+begin
+  LProvider := TMultiLog4DProviderTelegram.Create('BOT_TOKEN', 'CHAT_ID');
+
+  TMultiLog4DUtil.Logger
+    .Tag('MyApp')
+    .AddProvider(LProvider);
+
+  TMultiLog4DUtil.Logger.LogWriteWarning('Memory usage above 80%');
+  TMultiLog4DUtil.Logger.LogWriteError('Failed to connect to database');
+  TMultiLog4DUtil.Logger.LogWriteFatalError('Service terminated unexpectedly');
+end;
+```
+
+**LogTypeFilter** — send only specific log types to Telegram:
+```pascal
+LProvider.LogTypeFilter := [ltWarning, ltError, ltFatalError]; // ltInformation is skipped
+```
+
+**ParseMode** — control Telegram message formatting:
+```pascal
+LProvider.ParseMode := tpmMarkdown;  // *[ERR]* MyApp / message / _timestamp_
+LProvider.ParseMode := tpmHTML;      // <b>[ERR]</b> MyApp / message / <i>timestamp</i>
+LProvider.ParseMode := tpmPlainText; // [ERR] MyApp / message / timestamp
+```
+
+**Full example with fluent API:**
+```pascal
+LProvider := TMultiLog4DProviderTelegram.Create('BOT_TOKEN', 'CHAT_ID');
+LProvider.ParseMode     := tpmMarkdown;
+LProvider.LogTypeFilter := [ltWarning, ltError, ltFatalError];
+
+TMultiLog4DUtil.Logger
+  .Tag('Production')
+  .AddProvider(LProvider)
+  .LogWriteInformation('Not sent — filtered out')
+  .LogWriteWarning('Disk usage above 90%')
+  .LogWriteError('Connection timeout')
+  .LogWriteFatalError('Service stopped');
+```
+
+> See full documentation in [`docs/providers/telegram.md`](docs/providers/telegram.md).
+
+---
+
 ### ⭕ Horse
 If you are looking to include logs in APIs developed in <b>Horse</b>, know that this is also possible, both for Windows and Linux. The process is the same, just add the library by downloading it or installing it through <b>boss</b> and it will work exactly as explained here.
 

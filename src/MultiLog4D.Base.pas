@@ -5,7 +5,8 @@ interface
 uses
   System.StrUtils,
   System.SysUtils,
-  System.Classes
+  System.Classes,
+  System.Generics.Collections
   {$IFDEF MSWINDOWS}
     ,Winapi.Windows
   {$ENDIF}
@@ -17,7 +18,8 @@ uses
   {$ENDIF}
   ,MultiLog4D.Types,
   MultiLog4D.Common,
-  MultiLog4D.Interfaces;
+  MultiLog4D.Interfaces,
+  MultiLog4D.Provider.Interfaces;
 
 type
   TMultiLog4DBase = class(TInterfacedObject, IMultiLog4D)
@@ -30,6 +32,7 @@ type
     class var FTag: string;
     class var FTagSet: Boolean;
     class var FEnableLog : Boolean;
+    class var FProviders: TList<IMultiLog4DProvider>;
     {$IF NOT DEFINED(ANDROID) AND NOT DEFINED(IOS)}
       {$IF DEFINED(MSWINDOWS)}
           FFileName: string;
@@ -42,12 +45,15 @@ type
     {$ENDIF}
     function GetDefaultTag: string;
     function GetLogPrefix(const ALogType: TLogType): string;
+    procedure NotifyProviders(const AMsg: string; const ALogType: TLogType);
     {$IF NOT DEFINED(ANDROID) AND NOT DEFINED(IOS)}
       {$IF DEFINED(MSWINDOWS)}
         function GetCategoryName: string;
       {$ENDIF}
     {$ENDIF}
   public
+    class constructor Create;
+    class destructor Destroy;
     function Tag(const ATag: string): IMultiLog4D; virtual;
     {$IF NOT DEFINED(ANDROID) AND NOT DEFINED(IOS)}
       {$IF DEFINED(MSWINDOWS)}
@@ -66,7 +72,12 @@ type
       {$ENDIF}
       function UserName(const AUserName: string): IMultiLog4D; virtual;
     {$ENDIF}
+    {$IF NOT DEFINED(ANDROID) AND NOT DEFINED(IOS)}
     function EnableLog(const AEnable: Boolean = True): IMultiLog4D; virtual;
+    {$ENDIF}
+    function AddProvider(const AProvider: IMultiLog4DProvider): IMultiLog4D; virtual;
+    function RemoveProvider(const AProvider: IMultiLog4DProvider): IMultiLog4D; virtual;
+    function ClearProviders: IMultiLog4D; virtual;
     function LogWrite(const AMsg: string; const ALogType: TLogType): IMultiLog4D; virtual; abstract;
     function LogWriteInformation(const AMsg: string): IMultiLog4D; virtual; abstract;
     function LogWriteWarning(const AMsg: string): IMultiLog4D; virtual; abstract;
@@ -76,6 +87,17 @@ type
   end;
 
 implementation
+
+class constructor TMultiLog4DBase.Create;
+begin
+  FEnableLog := True;
+  FProviders := TList<IMultiLog4DProvider>.Create;
+end;
+
+class destructor TMultiLog4DBase.Destroy;
+begin
+  FProviders.Free;
+end;
 
 function TMultiLog4DBase.GetDefaultTag: string;
 begin
@@ -91,6 +113,43 @@ begin
     FTagSet := True;
   end;
 
+  Result := Self as IMultiLog4D;
+end;
+
+procedure TMultiLog4DBase.NotifyProviders(const AMsg: string; const ALogType: TLogType);
+var
+  LEntry: TMultiLog4DLogEntry;
+  LProvider: IMultiLog4DProvider;
+begin
+  if FProviders.Count = 0 then Exit;
+  LEntry.TimeStamp := Now;
+  LEntry.LogType   := ALogType;
+  LEntry.Tag       := FTag;
+  LEntry.Message   := AMsg;
+  for LProvider in FProviders do
+    if LProvider.Enabled and (ALogType in LProvider.LogTypeFilter) then
+    try
+      LProvider.WriteLog(LEntry);
+    except
+      // Best-effort: provider failure does not affect native logging
+    end;
+end;
+
+function TMultiLog4DBase.AddProvider(const AProvider: IMultiLog4DProvider): IMultiLog4D;
+begin
+  FProviders.Add(AProvider);
+  Result := Self as IMultiLog4D;
+end;
+
+function TMultiLog4DBase.RemoveProvider(const AProvider: IMultiLog4DProvider): IMultiLog4D;
+begin
+  FProviders.Remove(AProvider);
+  Result := Self as IMultiLog4D;
+end;
+
+function TMultiLog4DBase.ClearProviders: IMultiLog4D;
+begin
+  FProviders.Clear;
   Result := Self as IMultiLog4D;
 end;
 
@@ -156,12 +215,14 @@ begin
   Result := Self as IMultiLog4D;
 end;
 {$ENDIF}
-{$ENDIF}
+
 function TMultiLog4DBase.EnableLog(const AEnable: Boolean = True): IMultiLog4D;
 begin
   FEnableLog := AEnable;
   Result := Self as IMultiLog4D;
 end;
+
+{$ENDIF}
 
 function TMultiLog4DBase.GetLogPrefix(const ALogType: TLogType): string;
 begin
